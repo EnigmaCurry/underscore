@@ -68,6 +68,12 @@
         obj.forEach(iterator, context);
       } else if (_.isNumber(obj.length)) {
         for (var i = 0, l = obj.length; i < l; i++) iterator.call(context, obj[i], i, obj);
+      } else if (obj.__iterator__){
+        var n = 0;
+        for (var i in obj) {
+          iterator.call(context, i, n, obj);
+          n+=1;  
+        }
       } else {
         for (var key in obj) {
           if (hasOwnProperty.call(obj, key)) iterator.call(context, obj[key], key, obj);
